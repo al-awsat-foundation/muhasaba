@@ -1,0 +1,96 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "Rahim Ahmed",
+            "email": "rahim@example.com",
+            "password": "123456",
+            "tasks": [
+                {
+                    "id": 1,
+                    "task": "ইস্তিগফার",
+                    "score": 500
+                },
+                {
+                    "id": 2,
+                    "task": "দরুদ শরীফ",
+                    "score": 300
+                },
+                {
+                    "id": 3,
+                    "task": "সালাত",
+                    "score": 50
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Karim Hasan",
+            "email": "karim@example.com",
+            "password": "abcdef",
+            "tasks": [
+                {
+                    "id": 1,
+                    "task": "ইস্তিগফার",
+                    "score": 750
+                },
+                {
+                    "id": 2,
+                    "task": "দরুদ শরীফ",
+                    "score": 450
+                },
+                {
+                    "id": 3,
+                    "task": "সালাত",
+                    "score": 60
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Sadia Akter",
+            "email": "sadia@example.com",
+            "password": "qwerty",
+            "tasks": [
+                {
+                    "id": 1,
+                    "task": "ইস্তিগফার",
+                    "score": 1000
+                },
+                {
+                    "id": 2,
+                    "task": "দরুদ শরীফ",
+                    "score": 600
+                },
+                {
+                    "id": 3,
+                    "task": "সালাত",
+                    "score": 80
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Humaira",
+            "email": "humaira@example.com",
+            "password": "qwerty",
+            "tasks": [
+                {
+                    "id": 1,
+                    "task": "ইস্তিগফার",
+                    "score": 1000
+                },
+                {
+                    "id": 2,
+                    "task": "দরুদ শরীফ",
+                    "score": 600
+                },
+                {
+                    "id": 3,
+                    "task": "সালাত",
+                    "score": 80
+                }
+            ]
+        }
+    ]
+}

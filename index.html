@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Muhasaba</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/daisyui.css" rel="stylesheet" type="text/css">
+    <!--Additional CSS-->
+    <link href="./css/index.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Galada&family=Hind+Siliguri:wght@500;600&display=swap"
+        rel="stylesheet">
+
+</head>
+
+
+<body class="min-h-screen bg-base-200">
+
+
+    <!-- ==================================================
+         NAVBAR
+    =================================================== -->
+
+    <header class="sticky top-0 z-50 border-b border-base-300 bg-base-100">
+
+        <div class="flex justify-between">
+            <div class="navbar relative mx-auto max-w-7xl px-4">
+
+                <!-- ==================================================
+                 LEFT SIDE
+                =================================================== -->
+
+                <div class="navbar justify-start">
+
+                    <!-- ================= LOGO ================= -->
+
+                    <a href="./index.html" class="flex items-center">
+                        <img src="./images/muhasaba.png" alt="Website Logo" class="w-full md:h-12">
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- ==================================================
+                             Center SIDE
+            =================================================== -->
+            <div class="navbar justify-center gap-4">
+                <a href="./pages/rules.html" class="flex items-center p-3 rounded-sm border-r border-r-red-100 ">
+                    Rules
+                </a>
+                <a href="./pages/ranking.html" class="flex items-center ">
+                    Ranking
+                </a>
+            </div>
+
+            <!-- ==================================================
+                            RIGHT SIDE
+            =================================================== -->
+
+            <div class="navbar justify-end">
+                <div class="flex">
+                    <a href="./pages/login.html">
+                        <button id="login" class="hidden btn btn-primary">Login</button>
+                    </a>
+
+                    <button id="logout" class="hidden btn btn-primary">Logout</button>
+
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- ==================================================
+         MAIN CONTENT
+    =================================================== -->
+
+    <main class="mx-auto max-w-7xl px-4 py-10">
+
+        <!-- ==================================================
+                        হিজরী তারিখ প্রদর্শন
+        =================================================== -->
+        <section>
+            <div class="flex justify-center mt-4">
+                <div id="hijriDate" class="px-5 py-2.5
+               rounded-2xl
+               bg-gradient-to-r from-indigo-500/20 to-purple-500/20
+               border border-white/15
+               backdrop-blur-xl
+               text-black/90
+               text-sm font-medium
+               tracking-wide
+               shadow-[0_8px_30px_rgba(0,0,0,0.15)]">
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+        <section class="flex justify-center px-4 py-8">
+
+            <div class="relative h-64 w-64 sm:h-72 sm:w-72">
+
+                <!-- OUTER RING -->
+                <div class="absolute inset-0 rounded-full
+                    border border-primary/30
+                    shadow-[0_0_25px_rgba(59,130,246,0.10)]">
+                </div>
+
+                <!-- ROTATING QUOTE -->
+                <div class="absolute inset-2
+                    animate-[spin_35s_linear_infinite_reverse]">
+
+                    <svg viewBox="0 0 240 240" class="h-full w-full overflow-visible">
+
+                        <defs>
+                            <path id="scoreTextCircle" d="M120,120 m-108,0
+                             a108,108 0 1,1 216,0
+                             a108,108 0 1,1 -216,0" />
+                        </defs>
+
+                        <text class="fill-base-content/60
+                             text-[13px]
+                             font-semibold
+                             tracking-[2px]">
+                            <textPath href="#scoreTextCircle">
+                                So compete with one another in doing good • Surah Al-Baqarah 2:148 •
+                            </textPath>
+                        </text>
+                    </svg>
+                </div>
+
+                <!-- CENTER PANEL -->
+                <div class="absolute inset-9 sm:inset-10
+                    flex flex-col items-center justify-center
+                    rounded-full border border-primary/15
+                    bg-base-100
+                    shadow-[0_8px_30px_rgba(30,64,175,0.12)]
+                    px-4">
+
+                    <!-- USER NAME -->
+                    <a id="userName" href="#" class="block w-full max-w-full
+                      text-center
+                      text-sm sm:text-lg
+                      font-bold
+                      leading-snug
+                      tracking-tight
+                      [overflow-wrap:anywhere]
+                      drop-shadow-sm
+                      transition-colors duration-300
+                      hover:text-amber-600">
+                        User Name
+                    </a>
+
+                    <!-- ELEGANT NAME DIVIDER -->
+                    <div class="relative my-4 flex w-28 items-center justify-center">
+
+                        <span class="h-px flex-1
+                 bg-gradient-to-r
+                 from-transparent
+                 via-amber-500/70
+                 to-amber-500/30">
+                        </span>
+
+                        <span class="mx-2 h-1.5 w-1.5 rotate-45
+                 border border-amber-500/80
+                 bg-base-100">
+                        </span>
+
+                        <span class="h-px flex-1
+                 bg-gradient-to-l
+                 from-transparent
+                 via-amber-500/70
+                 to-amber-500/30">
+                        </span>
+
+                    </div>
+                    <!-- SCORE -->
+                    <span id="totalScoreValue" class="block max-w-full
+                         text-4xl sm:text-5xl
+                         font-black
+                         leading-none
+                         tracking-tight
+                         tabular-nums
+                         text-primary
+                         drop-shadow-sm">
+                        0
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+
+    </main>
+
+
+    <!-- ==================================================
+                                  Card Section
+             =================================================== -->
+    <section id="cardSection" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+
+
+    </section>
+    </main>
+
+
+
+    <!-- ==================================================
+         JAVASCRIPT
+    =================================================== -->
+
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/taskCard.js"></script>
+    <script src="js/hijriDate.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+<!-- Workflow -->
+
+<!-- Registration → 10 fresh tasks (score 0) → JSONBin → Login → User's tasks → Add/increment scores → Save back to JSONBin. -->

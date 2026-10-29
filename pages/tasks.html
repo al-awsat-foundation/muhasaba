@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>users</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/daisyui.css" rel="stylesheet" type="text/css">
+    <!--Additional CSS-->
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Galada&family=Hind+Siliguri:wght@500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header class="sticky top-0 z-50 border-b border-base-300 bg-base-100">
+
+        <div class="navbar relative mx-auto max-w-7xl px-4">
+
+
+            <!-- ==================================================
+                 LEFT SIDE
+            =================================================== -->
+
+            <div class="navbar-start">
+
+
+                <!-- ================= LOGO ================= -->
+
+                <!-- Visible when logged out -->
+                <a id="navbarLogo" href="index.html" class="flex items-center">
+                    <!-- <img src="assets/logo.svg" alt="Website Logo" class="h-9 w-9"> -->
+                </a>
+
+
+                <!-- ================= USER NAME ================= -->
+
+                <!-- Visible when logged in -->
+                <a id="navbarUserName" href="#" class="hidden text-lg font-bold">
+                    User Name
+                </a>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 DESKTOP NAVIGATION
+            =================================================== -->
+
+            <div class="navbar-center hidden md:flex">
+
+                <ul class="menu menu-horizontal gap-1">
+
+
+                    <!-- HOME -->
+
+                    <li>
+                        <a href="../index.html" class="font-medium">
+                            Home
+                        </a>
+                    </li>
+
+
+                    <!-- RANKING -->
+
+                    <li>
+                        <a href="ranking.html" class="font-medium">
+                            Ranking
+                        </a>
+                    </li>
+
+
+                    <!-- USERS
+                         Admin only -->
+
+                    <li id="desktopUsersMenu" class="hidden">
+                        <a href="users.html" class="font-medium">
+                            Users
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="users.html" class="font-medium">
+                            Users
+                        </a>
+                    </li>
+
+
+                    <!-- ABOUT -->
+
+                    <li>
+                        <a href="about.html" class="font-medium">
+                            About
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 RIGHT SIDE
+            =================================================== -->
+
+            <div class="navbar-end">
+
+                <!-- ==================================================
+                     DESKTOP SCORE
+                =================================================== -->
+
+                <div id="desktopUserScore" class="items-center gap-2 ">
+
+                    <span class="text-sm text-base-content/60">
+                        Score:
+                    </span>
+
+                    <span id="desktopScoreValue" class="badge badge-primary font-bold">
+                        0
+                    </span>
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     MOBILE MENU
+                =================================================== -->
+
+                <div class="dropdown dropdown-end md:hidden">
+
+
+                    <!-- Hamburger Button -->
+
+                    <button tabindex="0" class="btn btn-ghost btn-circle" aria-label="Open navigation menu">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+
+                        </svg>
+
+                    </button>
+
+
+
+                    <!-- Dropdown Menu -->
+
+                    <ul tabindex="0"
+                        class="menu dropdown-content z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow-lg">
+
+                        <!-- USERS
+                             Admin only -->
+
+                        <li id="mobileUsersMenu" class="hidden">
+                            <a href="users.html">
+                                Users
+                            </a>
+                        </li>
+
+
+                        <!-- ABOUT -->
+                        <li>
+                            <a href="ranking.html" class="font-medium">
+                                Ranking
+                            </a>
+                        </li>
+                        <li class="font-medium">
+                            <a href="users.html">
+                                Users
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <section class="p-8">
+        <div id="usersContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        </div>
+    </section>
+
+
+
+
+    <script src="../js/app.js"></script>
+    <script>
+        let usersData = [];
+
+        // Get users from data.json
+        fetch("../data.json")
+            .then(res => res.json())
+            .then(data => {
+                usersData = data.users;
+                displayUsers(usersData);
+            })
+            .catch(error => {
+                console.error("Error loading users:", error);
+            });
+
+
+        // ================================
+        // Display all users
+        // ================================
+
+        function displayUsers(users) {
+
+            const usersContainer = document.getElementById("usersContainer");
+
+            usersContainer.innerHTML = "";
+
+            users.forEach(user => {
+
+                // Calculate total score
+                const totalScore = user.tasks.reduce(
+                    (total, task) => total + task.score,
+                    0
+                );
+
+                const userCard = document.createElement("div");
+
+                userCard.className =
+                    "w-full rounded-2xl bg-base-100 p-4 shadow-md border border-base-300";
+
+                userCard.innerHTML = `
+
+            <!-- User Header -->
+            <div class="flex items-center justify-between mb-4">
+
+                <div class="min-w-0">
+                    <h2 class="text-lg font-bold text-primary truncate">
+                        ${user.name}
+                    </h2>
+
+                    <p class="text-xs text-base-content/50 truncate">
+                        ${user.email}
+                    </p>
+                </div>
+
+                <div class="text-center ml-3 shrink-0">
+
+                    <p class="text-xl font-bold text-primary">
+                        ${totalScore}
+                    </p>
+
+                    <p class="text-[9px] text-base-content/50">
+                        TOTAL
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Tasks -->
+            <ul class="space-y-2">
+
+                ${user.tasks.map(task => `
+
+                    <li
+                        class="flex items-center justify-between
+                        rounded-lg bg-base-200 px-3 py-2"
+                    >
+
+                        <!-- Task name -->
+                        <span class="text-sm truncate mr-2">
+                            ${task.task}
+                        </span>
+
+
+                        <!-- Score + Delete -->
+                        <div class="flex items-center gap-2 shrink-0">
+
+                            <span class="text-sm font-semibold">
+                                ${task.score}
+                            </span>
+
+                            <button
+                                class="reset-score btn btn-warning btn-xs"
+                                data-user-id="${user.id}"
+                                data-task-id="${task.id}"
+                                title="Reset score"
+                                >  Reset
+                            </button>
+
+                        </div>
+
+                    </li>
+
+                `).join("")}
+
+            </ul>
+
+
+            <!-- User ID -->
+            <div class="mt-3 pt-2 border-t border-base-300">
+
+                <span class="text-[10px] text-base-content/40">
+                    User ID: ${user.id}
+                </span>
+
+            </div>
+
+        `;
+
+                usersContainer.appendChild(userCard);
+            });
+        }
+
+        document.addEventListener("click", function (e) {
+
+            if (!e.target.classList.contains("reset-score")) {
+                return;
+            }
+
+            const userId = Number(e.target.dataset.userId);
+            const taskId = Number(e.target.dataset.taskId);
+
+            // Find user
+            const user = usersData.find(user => user.id === userId);
+
+            if (!user) {
+                return;
+            }
+
+            // Find task
+            const task = user.tasks.find(task => task.id === taskId);
+
+            if (!task) {
+                return;
+            }
+
+            // Confirm
+            const confirmReset = confirm(
+                `Reset "${task.task}" score to 0?`
+            );
+
+            if (!confirmReset) {
+                return;
+            }
+
+            // Reset score
+            task.score = 0;
+
+            // Re-render
+            displayUsers(usersData);
+        });
+    </script>
+</body>
+
+</html>

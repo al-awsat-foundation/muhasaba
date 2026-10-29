@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Control | Muhasaba</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/daisyui.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Galada&family=Hind+Siliguri:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: "Hind Siliguri", sans-serif;
+        }
+
+        .brand {
+            font-family: "Galada", cursive;
+        }
+
+        dialog::backdrop {
+            background: rgb(0 0 0 / 55%);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-base-200 text-base-content">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 border-b border-base-300 bg-base-100">
+        <div class="navbar mx-auto max-w-7xl px-4">
+
+            <div class="navbar-start">
+                <a href="../index.html" class="flex items-center">
+                    <img src="../images/muhasaba.png" alt="Muhasaba Logo" class="h-10 md:h-12">
+                </a>
+            </div>
+
+            <div class="navbar-center hidden gap-4 sm:flex">
+                <a href="../index.html" class="btn btn-ghost btn-sm">Home</a>
+                <a href="./rules.html" class="btn btn-ghost btn-sm">Rules</a>
+                <a href="./ranking.html" class="btn btn-ghost btn-sm">Ranking</a>
+            </div>
+
+            <div class="navbar-end gap-2">
+                <a id="loginLink" href="./login.html">
+                    <button id="login" class="btn btn-primary btn-sm">Login</button>
+                </a>
+
+                <button id="logout" class="btn btn-outline btn-sm hidden">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
+
+        <!-- Heading -->
+        <section class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="mb-1 text-sm font-semibold uppercase tracking-wider text-primary">
+                    Admin dashboard
+                </p>
+
+                <h1 class="text-3xl font-bold sm:text-4xl">
+                    ইউজার নিয়ন্ত্রণ
+                </h1>
+
+                <p class="mt-2 max-w-2xl text-sm text-base-content/70">
+                    ইউজার, টাস্ক, স্কোর ও স্কোরিং নিয়ম পরিচালনা করো।
+                    পরিবর্তন JSONBin-এ সেভ হবে।
+                </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+                <button id="monthlyResetBtn" class="btn btn-warning btn-sm sm:btn-md">
+                    Monthly Reset
+                </button>
+
+                <button id="resetAllBtn" class="btn btn-error btn-sm sm:btn-md">
+                    Reset All Scores
+                </button>
+            </div>
+        </section>
+
+        <!-- Statistics -->
+        <section class="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+
+            <div class="stat rounded-2xl border border-base-300 bg-base-100 shadow-sm">
+                <div class="stat-title">মোট ইউজার</div>
+                <div id="totalUsers" class="stat-value text-primary">—</div>
+            </div>
+
+            <div class="stat rounded-2xl border border-base-300 bg-base-100 shadow-sm">
+                <div class="stat-title">মোট টাস্ক এন্ট্রি</div>
+                <div id="totalTaskEntries" class="stat-value text-secondary">—</div>
+            </div>
+
+            <div class="stat rounded-2xl border border-base-300 bg-base-100 shadow-sm">
+                <div class="stat-title">সর্বশেষ অবস্থা</div>
+                <div id="saveStatus" class="stat-value text-lg">লোড হচ্ছে</div>
+                <div id="connectionStatus" class="text-xs opacity-60">
+                    অপেক্ষা করো…
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Search and reload -->
+        <section class="mb-4 flex flex-col gap-3 sm:flex-row">
+
+            <label class="input input-bordered flex flex-1 items-center gap-2 bg-base-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-60" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <circle cx="11" cy="11" r="7" stroke-width="2" />
+                    <path stroke-width="2" stroke-linecap="round" d="m16 16 4 4" />
+                </svg>
+
+                <input id="searchUsers" type="search" class="grow" placeholder="নাম বা ইমেইল দিয়ে খুঁজুন…">
+            </label>
+
+            <button id="reloadBtn" class="btn btn-outline">
+                ডেটা রিফ্রেশ
+            </button>
+
+        </section>
+
+        <!-- Errors -->
+        <div id="errorBox" class="alert alert-error mb-4 hidden">
+            <span id="errorText"></span>
+        </div>
+
+        <!-- User cards -->
+        <section id="usersContainer" class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        </section>
+
+    </main>
+
+    <!-- Edit task modal -->
+    <dialog id="editTaskModal" class="modal">
+        <div class="modal-box w-11/12 max-w-2xl">
+
+            <h3 class="text-xl font-bold">টাস্ক সম্পাদনা</h3>
+
+            <p class="mt-1 text-sm text-base-content/60">
+                একই টাস্কের নাম ও নিয়ম সব ইউজারের জন্য পরিবর্তন হবে।
+            </p>
+
+            <form id="editTaskForm" class="mt-5 space-y-4">
+                <input type="hidden" id="editTaskKey">
+
+                <div>
+                    <label for="editTaskName" class="label">
+                        <span class="label-text font-semibold">টাস্কের নাম</span>
+                    </label>
+
+                    <input id="editTaskName" class="input input-bordered w-full" required>
+                </div>
+
+                <div>
+                    <label for="editTaskRule" class="label">
+                        <span class="label-text font-semibold">স্কোরিং নিয়ম (JSON)</span>
+                    </label>
+
+                    <textarea id="editTaskRule" class="textarea textarea-bordered min-h-40 w-full font-mono text-sm"
+                        spellcheck="false" required></textarea>
+
+                    <p class="mt-1 text-xs text-base-content/60">
+                        বৈধ JSON object লিখবে।
+                        উদাহরণ: {"type":"per_unit","unit":"পৃষ্ঠা","points":1}
+                    </p>
+                </div>
+
+                <div class="modal-action">
+                    <button type="button" id="cancelEditTask" class="btn btn-ghost">
+                        বাতিল
+                    </button>
+
+                    <button type="submit" id="saveTaskEditBtn" class="btn btn-primary">
+                        পরিবর্তন সেভ
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+        <form method="dialog" class="modal-backdrop">
+            <button aria-label="Close">close</button>
+        </form>
+    </dialog>
+
+    <!-- Edit score modal -->
+    <dialog id="editScoreModal" class="modal">
+        <div class="modal-box max-w-md">
+
+            <h3 id="editScoreTitle" class="text-xl font-bold">
+                স্কোর সম্পাদনা
+            </h3>
+
+            <form id="editScoreForm" class="mt-4 space-y-4">
+                <input type="hidden" id="editScoreUserId">
+                <input type="hidden" id="editScoreTaskKey">
+
+                <div>
+                    <label for="editScoreValue" class="label">
+                        <span class="label-text">নতুন স্কোর</span>
+                    </label>
+
+                    <input id="editScoreValue" type="number" step="any" min="0" class="input input-bordered w-full"
+                        required>
+                </div>
+
+                <div class="modal-action">
+                    <button type="button" id="cancelEditScore" class="btn btn-ghost">
+                        বাতিল
+                    </button>
+
+                    <button type="submit" id="saveScoreBtn" class="btn btn-primary">
+                        স্কোর সেভ
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+        <form method="dialog" class="modal-backdrop">
+            <button aria-label="Close">close</button>
+        </form>
+    </dialog>
+
+    <!-- Config must define BIN_URL and ACCESS_KEY -->
+    <script src="../js/config.js"></script>
+
+    <!-- Admin page handles its own navbar and data -->
+    <script src="../js/admin.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+.task-card {
+    animation: cardEnter 0.6s ease both;
+}
+
+.task-card:hover {
+    transform: translateY(-6px);
+}
+
+.task-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 24px;
+    background: linear-gradient(120deg,
+            transparent 20%,
+            rgba(255, 255, 255, 0.12),
+            transparent 80%);
+    transform: translateX(-120%);
+    transition: transform 0.7s ease;
+    pointer-events: none;
+}
+
+.task-card:hover::before {
+    transform: translateX(120%);
+}
+
+@keyframes cardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

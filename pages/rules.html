@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rules & Guidelines | Muhasaba</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/daisyui.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --green: #123c32;
+            --green-light: #1c5747;
+            --gold: #d9b56d;
+            --cream: #f8f8f3;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: var(--cream);
+            color: #263b32;
+        }
+
+        .hero-bg {
+            background:
+                radial-gradient(circle at 85% 15%, #ffffff12, transparent 28%),
+                radial-gradient(circle at 10% 90%, #d9b56d1c, transparent 30%),
+                linear-gradient(135deg, #102e27, #1c5747);
+        }
+
+        .gold-text {
+            color: var(--gold);
+        }
+
+        .section-label {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: #efe7d3;
+            color: #82662f;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .rule-card {
+            background: white;
+            border: 1px solid #e6e9e1;
+            border-radius: 18px;
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+
+        .rule-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px #173d2c0d;
+        }
+
+        .task-number {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            background: #e8f1e9;
+            color: #174b3d;
+            font-weight: 700;
+        }
+
+        .score-pill {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 11px;
+            border-radius: 8px;
+            background: #edf5ef;
+            color: #235b43;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .prize-card {
+            padding: 25px;
+            border-radius: 20px;
+            background: white;
+            border: 1px solid #e4e5da;
+        }
+
+        .prize-first {
+            color: white;
+            background: linear-gradient(145deg, #153d31, #245b46);
+            border-color: #245b46;
+        }
+
+        .prize-icon {
+            width: 54px;
+            height: 54px;
+            display: grid;
+            place-items: center;
+            border-radius: 16px;
+            background: #f2ead7;
+            font-size: 26px;
+        }
+
+        .prize-first .prize-icon {
+            background: #ffffff18;
+        }
+
+        .fade-in {
+            animation: appear .7s ease both;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR: তোমার দেওয়া কোড অপরিবর্তিত -->
+
+    <header class="sticky top-0 z-50 border-b border-base-300 bg-base-100">
+
+        <div class="flex justify-between items-center">
+
+            <!-- LEFT: LOGO -->
+            <div class="navbar relative mx-auto max-w-7xl px-4">
+
+                <div class="navbar justify-start">
+                    <a href="../index.html" class="flex items-center">
+                        <img src="../images/muhasaba.png" alt="Website Logo" class="w-full md:h-12">
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- CENTER: LINKS -->
+            <div class="navbar justify-center gap-4">
+
+                <a href="./rules.html" aria-current="page"
+                    class="flex items-center p-3 rounded-sm border-r border-r-red-100 font-semibold text-primary">
+                    Rules
+                </a>
+
+                <a href="./ranking.html" class="flex items-center">
+                    Ranking
+                </a>
+
+            </div>
+
+            <!-- RIGHT: LOGIN / LOGOUT -->
+            <div class="navbar justify-end">
+                <div class="flex gap-2">
+
+                    <a href="../pages/login.html" id="loginLink">
+                        <button id="login" class="btn btn-primary btn-sm md:btn-md">
+                            Login
+                        </button>
+                    </a>
+
+                    <button id="logout" class="btn btn-primary btn-sm md:btn-md hidden">
+                        Logout
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <!-- HERO SECTION -->
+
+        <section class="hero-bg text-white">
+            <div class="mx-auto max-w-7xl px-5 py-16 text-center sm:px-8 sm:py-24">
+
+                <div class="fade-in mx-auto max-w-3xl">
+
+                    <span
+                        class="inline-block rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-white/85">
+                        RULES · DISCIPLINE · GROWTH
+                    </span>
+
+                    <h1 class="mt-7 text-4xl leading-tight font-bold sm:text-5xl md:text-6xl">
+                        প্রতিযোগিতা হোক
+                        <span class="gold-text">উত্তম আমলে</span>
+                    </h1>
+
+                    <p class="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/75 sm:text-lg">
+                        প্রতিদিন নিজের আমল পর্যালোচনা করো।
+                        ভালো কাজের অভ্যাস গড়ে তোলো।
+                        গতকালের নিজের চেয়ে আজ আরও উত্তম হওয়ার চেষ্টা করো।
+                    </p>
+
+                    <a href="#scoring"
+                        class="mt-8 inline-flex items-center gap-2 rounded-xl bg-[#d9b56d] px-6 py-3 font-semibold text-[#183c30] transition hover:bg-[#e7c986]">
+                        নিয়মাবলি জানুন
+                        <span>↓</span>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- PURPOSE -->
+
+        <section class="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
+
+            <div class="mb-9 text-center">
+                <span class="section-label">OUR PURPOSE</span>
+
+                <h2 class="mt-4 text-3xl font-bold sm:text-4xl">
+                    স্কোরের চেয়েও গুরুত্বপূর্ণ
+                </h2>
+
+                <p class="mx-auto mt-4 max-w-2xl leading-7 text-gray-500">
+                    Muhasaba শুধু স্কোর অর্জনের জায়গা নয়;
+                    এটি আত্মসমালোচনা, আত্মশুদ্ধি এবং নিয়মিত ভালো কাজের
+                    অভ্যাস গড়ে তোলার একটি ব্যক্তিগত প্রচেষ্টা।
+                </p>
+            </div>
+
+            <div class="grid gap-5 sm:grid-cols-3">
+
+                <article class="rule-card p-6">
+                    <div class="text-3xl">🌱</div>
+                    <h3 class="mt-4 text-xl font-bold">ধারাবাহিকতা</h3>
+                    <p class="mt-2 text-sm leading-7 text-gray-600">
+                        অল্প হলেও নিয়মিত ভালো কাজ করো।
+                        প্রতিদিন নিজের উন্নতির চেষ্টা করো।
+                    </p>
+                </article>
+
+                <article class="rule-card p-6">
+                    <div class="text-3xl">🤍</div>
+                    <h3 class="mt-4 text-xl font-bold">বিশুদ্ধ নিয়ত</h3>
+                    <p class="mt-2 text-sm leading-7 text-gray-600">
+                        মানুষের প্রশংসা বা র‍্যাঙ্কিং নয়;
+                        আল্লাহর সন্তুষ্টিই হোক আমলের মূল উদ্দেশ্য।
+                    </p>
+                </article>
+
+                <article class="rule-card p-6">
+                    <div class="text-3xl">🤝</div>
+                    <h3 class="mt-4 text-xl font-bold">উত্তম প্রতিযোগিতা</h3>
+                    <p class="mt-2 text-sm leading-7 text-gray-600">
+                        অন্যের উন্নতিতে অনুপ্রাণিত হও।
+                        কাউকে ছোট না করে ভালো কাজে উৎসাহ দাও।
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+
+        <!-- SCORING RULES -->
+
+        <section id="scoring" class="bg-white py-14 sm:py-20">
+
+            <div class="mx-auto max-w-6xl px-5 sm:px-8">
+
+                <div class="mb-10 text-center">
+                    <span class="section-label">SCORING SYSTEM</span>
+
+                    <h2 class="mt-4 text-3xl font-bold sm:text-4xl">
+                        স্কোরিং পদ্ধতি
+                    </h2>
+
+                    <p class="mx-auto mt-3 max-w-2xl leading-7 text-gray-500">
+                        প্রতিটি কাজের নির্ধারিত নিয়ম অনুযায়ী স্কোর যোগ হবে।
+                        নিজের অর্জন সঠিকভাবে হিসাব করো এবং নিয়ম মেনে চলো।
+                    </p>
+                </div>
+
+                <div class="grid gap-4 md:grid-cols-2">
+
+                    <article class="rule-card p-5 sm:p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="task-number">01</div>
+                            <div>
+                                <h3 class="text-lg font-bold">জামাতে সালাত</h3>
+                                <span class="score-pill">প্রতি ওয়াক্তে ৩ পয়েন্ট</span>
+                                <p class="mt-3 text-sm leading-7 text-gray-600">
+                                    জামাতে আদায় করা প্রতিটি ওয়াক্তের জন্য
+                                    ৩ পয়েন্ট। পাঁচ ওয়াক্তে সর্বোচ্চ ১৫ পয়েন্ট।
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="rule-card p-5 sm:p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="task-number">02</div>
+                            <div>
+                                <h3 class="text-lg font-bold">সুন্নাত সালাত</h3>
+                                <span class="score-pill">প্রতি রাকাতে ১ পয়েন্ট</span>
+                                <p class="mt-3 text-sm leading-7 text-gray-600">
+                                    আদায় করা সুন্নাত সালাতের প্রতি রাকাতে
+                                    ১ পয়েন্ট। নির্ধারিত সর্বোচ্চ সীমা ১২ পয়েন্ট।
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="rule-card p-5 sm:p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="task-number">03</div>
+                            <div>
+                                <h3 class="text-lg font-bold">কুরআন তেলাওয়াত</h3>
+                                <span class="score-pill">প্রতি পৃষ্ঠায় ১ পয়েন্ট</span>
+                                <p class="mt-3 text-sm leading-7 text-gray-600">
+                                    কুরআন তেলাওয়াতের প্রতি পৃষ্ঠার জন্য
+                                    ১ পয়েন্ট। পড়া পৃষ্ঠার সংখ্যা সঠিকভাবে
+                                    ইনপুট দিতে হবে।
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="rule-card p-5 sm:p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="task-number">04</div>
+                            <div>
+                                <h3 class="text-lg font-bold">ইস্তিগফার</h3>
+                                <span class="score-pill">প্রতি ১০ বারে ১ পয়েন্ট</span>
+                                <p class="mt-3 text-sm leading-7 text-gray-600">
+                                    প্রতি ১০ বার ইস্তিগফারের জন্য ১ পয়েন্ট।
+                                    যেমন, ১০০ বার ইস্তিগফারে ১০ পয়েন্ট।
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="rule-card p-5 sm:p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="task-number">05</div>
+                            <div>
+                                <h3 class="text-lg font-bold">দৃষ্টি হেফাজত</h3>
+                                <span class="score-pill">লক্ষ্য পূরণে ১০ পয়েন্ট</span>
+                                <p class="mt-3 text-sm leading-7 text-gray-600">
+                                    নির্ধারিত দিনের দৃষ্টি হেফাজতের
+                                    লক্ষ্য পূরণ করলে ১০ পয়েন্ট।
+                                    নিজের কাছে সৎ থাকতে হবে।
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="rule-card p-5 sm:p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="task-number">06</div>
+                            <div class="w-full">
+                                <h3 class="text-lg font-bold">আগে ঘুমানো</h3>
+                                <span class="score-pill">সময় অনুযায়ী স্কোর</span>
+
+                                <div class="mt-4 space-y-3 text-sm">
+                                    <div class="flex justify-between gap-3">
+                                        <span>রাত ১১টার আগে</span>
+                                        <strong class="text-green-700">১০ পয়েন্ট</strong>
+                                    </div>
+                                    <div class="flex justify-between gap-3">
+                                        <span>রাত ১১টা–১২টা</span>
+                                        <strong class="text-amber-700">৫ পয়েন্ট</strong>
+                                    </div>
+                                    <div class="flex justify-between gap-3">
+                                        <span>রাত ১২টার পরে</span>
+                                        <strong class="text-gray-500">০ পয়েন্ট</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="rule-card p-5 sm:p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="task-number">07</div>
+                            <div>
+                                <h3 class="text-lg font-bold">কিয়ামুল লাইল</h3>
+                                <span class="score-pill">প্রতি ২ রাকাতে ২ পয়েন্ট</span>
+                                <p class="mt-3 text-sm leading-7 text-gray-600">
+                                    কিয়ামুল লাইলের প্রতি ২ রাকাতে ২ পয়েন্ট।
+                                    সর্বোচ্চ ৮ রাকাতে ৮ পয়েন্ট এবং বিতরের
+                                    জন্য অতিরিক্ত ২ পয়েন্ট।
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="rule-card p-5 sm:p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="task-number">08</div>
+                            <div>
+                                <h3 class="text-lg font-bold">দাওয়াহ</h3>
+                                <span class="score-pill">লক্ষ্য পূরণে ১০ পয়েন্ট</span>
+                                <p class="mt-3 text-sm leading-7 text-gray-600">
+                                    নির্ধারিত দিনের দাওয়াহর লক্ষ্য
+                                    পূরণ করলে ১০ পয়েন্ট। জ্ঞান, প্রজ্ঞা
+                                    ও উত্তম আচরণের সঙ্গে দাওয়াহ দাও।
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="rule-card p-5 sm:p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="task-number">09</div>
+                            <div>
+                                <h3 class="text-lg font-bold">ইলম অর্জন</h3>
+                                <span class="score-pill">প্রতি পৃষ্ঠা ১ পয়েন্ট</span>
+                                <p class="mt-3 text-sm leading-7 text-gray-600">
+                                    উপকারী জ্ঞান অর্জনে নিয়মিত সময় দাও।
+                                    টাস্কের নির্ধারিত স্কোরিং নিয়ম অনুসরণ করো। যে কোন ইসলামি বই পড়লেই হবে এবং কত পৃষ্ঠা
+                                    পড়া হয়েছে তা সাবমিট করতে হবে।
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="rule-card p-5 sm:p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="task-number">10</div>
+                            <div>
+                                <h3 class="text-lg font-bold">শরীর চর্চা</h3>
+                                <span class="score-pill">নির্ধারিত ১০ পয়েন্ট</span>
+                                <p class="mt-3 text-sm leading-7 text-gray-600">
+                                    প্রতিদিন কমপক্ষে ১০ মিনিট যেকোন শরীরচর্চা করলেই হবে। যেমন: হাঁটা, সাতার, সাইকেলিং,
+                                    ব্যায়াম ইত্যাদি।
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <p class="mt-6 rounded-xl bg-[#f7f5ed] p-4 text-sm leading-7 text-gray-600">
+                    <strong>বিশেষ দ্রষ্টব্য:</strong> স্কোরিং নিয়মের
+                    চূড়ান্ত কর্তৃত্ব থাকবে ওয়েবসাইটে কার্যকর টাস্ক-রুলের।
+                    ভুলবশত বেশি বা কম স্কোর যোগ হলে তা যাচাই করে নিতে হবে।
+                </p>
+
+            </div>
+        </section>
+
+
+        <!-- RANKING -->
+
+        <section class="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
+
+            <div class="mb-9 text-center">
+                <span class="section-label">RANKING POLICY</span>
+                <h2 class="mt-4 text-3xl font-bold sm:text-4xl">
+                    র‍্যাঙ্কিংয়ের নিয়ম
+                </h2>
+            </div>
+
+            <div class="grid gap-5 md:grid-cols-3">
+
+                <article class="rule-card p-6">
+                    <div class="text-2xl">📊</div>
+                    <h3 class="mt-4 text-lg font-bold">মোট স্কোর</h3>
+                    <p class="mt-2 text-sm leading-7 text-gray-600">
+                        সব টাস্কের স্কোর যোগ করে মোট স্কোর নির্ধারিত হবে।
+                        বেশি স্কোর অর্জনকারী র‍্যাঙ্কিংয়ে এগিয়ে থাকবেন।
+                    </p>
+                </article>
+
+                <article class="rule-card p-6">
+                    <div class="text-2xl">🔤</div>
+                    <h3 class="mt-4 text-lg font-bold">সমান স্কোর</h3>
+                    <p class="mt-2 text-sm leading-7 text-gray-600">
+                        মোট স্কোর সমান হলে নামের বর্ণানুক্রম অনুযায়ী
+                        তালিকা সাজানো হবে।
+                    </p>
+                </article>
+
+                <article class="rule-card p-6">
+                    <div class="text-2xl">🔄</div>
+                    <h3 class="mt-4 text-lg font-bold">নিয়মিত আপডেট</h3>
+                    <p class="mt-2 text-sm leading-7 text-gray-600">
+                        র‍্যাঙ্কিং পেজ খোলার সময় সংরক্ষিত স্কোর অনুযায়ী
+                        তালিকা আপডেট হবে।
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+
+        <!-- REWARDS -->
+
+        <section class="bg-[#edf0e7] py-14 sm:py-20">
+
+            <div class="mx-auto max-w-6xl px-5 sm:px-8">
+
+                <div class="mb-10 text-center">
+                    <span class="section-label">REWARDS & RECOGNITION</span>
+
+                    <h2 class="mt-4 text-3xl font-bold sm:text-4xl">
+                        মাসিক পুরস্কার বিতরণ ও অবদানের নিয়ম
+                    </h2>
+
+                    <p class="mx-auto mt-4 max-w-4xl leading-7 text-lg text-gray-600">
+
+
+                        Muhasaba-তে প্রতি মাসে র‍্যাঙ্কিংয়ের ভিত্তিতে পুরস্কার বিতরণ করা হবে। মাস শেষে সর্বোচ্চ স্কোর
+                        অর্জনকারী প্রথম স্থান অধিকারীকে ন্যূনতম ৩০০ টাকা পুরস্কার দেওয়া হবে। র‍্যাঙ্কিংয়ের সর্বশেষ
+                        তিনজনের প্রত্যেকে ১০০ টাকা করে এই পুরস্কার তহবিলে অবদান রাখবেন।
+
+                        দ্বিতীয় ও তৃতীয় স্থান অধিকারীর পুরস্কারের সম্পূর্ণ ব্যয় ফাউন্ডেশন বহন করবে। প্রতি মাসের
+                        র‍্যাঙ্কিং অনুযায়ী বিজয়ীদের নির্ধারণ করে আয়োজকদের ঘোষিত সময় ও পদ্ধতিতে পুরস্কার বিতরণ করা হবে।
+
+
+                    </p>
+                </div>
+
+                <div class="grid gap-5 md:grid-cols-3">
+
+                    <article class="prize-card prize-first">
+                        <div class="prize-icon">🏆</div>
+
+                        <p class="mt-5 text-sm text-white/70">প্রথম স্থান</p>
+
+                        <h3 class="mt-2 text-3xl font-bold">
+                            সর্বনিম্ন ৩০০ টাকা
+                        </h3>
+
+                        <p class="mt-4 text-sm leading-7 text-white/80">
+                            সর্বোচ্চ মোট স্কোর অর্জনকারী প্রথম স্থান
+                            অধিকারী এই পুরস্কার পাবেন। র‍্যাঙ্কিংয়ের
+                            সর্বশেষ তিনজনের প্রত্যেকে ১০০ টাকা করে
+                            অবদান রাখবেন।
+                        </p>
+                    </article>
+
+                    <article class="prize-card">
+                        <div class="prize-icon">🥈</div>
+
+                        <p class="mt-5 text-sm text-gray-500">দ্বিতীয় স্থান</p>
+
+                        <h3 class="mt-2 text-xl font-bold">
+                            ফাউন্ডেশনের পুরস্কার
+                        </h3>
+
+                        <p class="mt-4 text-sm leading-7 text-gray-600">
+                            দ্বিতীয় স্থান অধিকারীর পুরস্কারের ব্যয়
+                            সম্পূর্ণভাবে ফাউন্ডেশন বহন করবে।
+                        </p>
+                    </article>
+
+                    <article class="prize-card">
+                        <div class="prize-icon">🥉</div>
+
+                        <p class="mt-5 text-sm text-gray-500">তৃতীয় স্থান</p>
+
+                        <h3 class="mt-2 text-xl font-bold">
+                            ফাউন্ডেশনের পুরস্কার
+                        </h3>
+
+                        <p class="mt-4 text-sm leading-7 text-gray-600">
+                            তৃতীয় স্থান অধিকারীর পুরস্কারের ব্যয়ও
+                            ফাউন্ডেশন বহন করবে।
+                        </p>
+                    </article>
+
+                </div>
+
+                <div class="mt-6 rounded-2xl border border-[#d9dfd2] bg-white p-5 sm:p-6">
+                    <h3 class="font-bold">মনে রাখবে</h3>
+
+                    <p class="mt-2 text-sm leading-7 text-gray-600">
+                        পুরস্কার এই প্রতিযোগিতার অনুপ্রেরণার একটি অংশ; আমাদের মূল লক্ষ্য হলো আল্লাহর
+                        সন্তুষ্টি অর্জন, উত্তম আমলের অভ্যাস গড়ে তোলা এবং প্রতিদিন নিজেকে আরও উন্নত করা।
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- FAIR PLAY -->
+
+        <section class="mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
+
+            <div class="mb-9 text-center">
+                <span class="section-label">FAIR PLAY</span>
+                <h2 class="mt-4 text-3xl font-bold sm:text-4xl">
+                    সততা ও শৃঙ্খলার অঙ্গীকার
+                </h2>
+            </div>
+
+            <div class="rule-card p-6 sm:p-8">
+                <div class="space-y-5">
+
+                    <div class="flex gap-3">
+                        <span class="font-bold text-green-700">✓</span>
+                        <p class="text-sm leading-7 text-gray-600">
+                            <strong class="text-gray-800">সত্যনিষ্ঠ থাকো:</strong>
+                            যতটুকু আমল করেছ, ঠিক ততটুকুই স্কোরে যোগ করো।
+                        </p>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <span class="font-bold text-green-700">✓</span>
+                        <p class="text-sm leading-7 text-gray-600">
+                            <strong class="text-gray-800">অন্যকে সম্মান করো:</strong>
+                            কারও স্কোর কম বলে তাকে উপহাস বা নিরুৎসাহিত করো না।
+                        </p>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <span class="font-bold text-green-700">✓</span>
+                        <p class="text-sm leading-7 text-gray-600">
+                            <strong class="text-gray-800">নিয়ম মেনে চলো:</strong>
+                            নিজের সুবিধার জন্য স্কোরিং নিয়ম পরিবর্তন
+                            বা অন্যের স্কোরে হস্তক্ষেপ করো না।
+                        </p>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <span class="font-bold text-green-700">✓</span>
+                        <p class="text-sm leading-7 text-gray-600">
+                            <strong class="text-gray-800">হতাশ হয়ো না:</strong>
+                            কোনো দিন পিছিয়ে পড়লে আবার শুরু করো।
+                            ধারাবাহিক উন্নতিই আসল লক্ষ্য।
+                        </p>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <span class="font-bold text-green-700">✓</span>
+                        <p class="text-sm leading-7 text-gray-600">
+                            <strong class="text-gray-800">নিয়ত বিশুদ্ধ রাখো:</strong>
+                            স্কোর ও পুরস্কার অনুপ্রেরণা হতে পারে,
+                            কিন্তু ইবাদতের উদ্দেশ্য যেন আল্লাহর সন্তুষ্টিই হয়।
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- MOTIVATION -->
+
+        <section class="px-5 pb-16 sm:px-8 sm:pb-20">
+
+            <div class="hero-bg mx-auto max-w-5xl rounded-3xl px-6 py-12 text-center text-white sm:px-12 sm:py-16">
+
+                <p class="gold-text text-sm font-semibold tracking-widest">
+                    A REMINDER FOR EVERY PARTICIPANT
+                </p>
+
+                <h2 class="mx-auto mt-6 max-w-3xl text-3xl leading-relaxed font-bold sm:text-4xl">
+                    “So compete with one another in doing good.”
+                </h2>
+
+                <p class="mt-4 text-white/70">
+                    Surah Al-Baqarah · 2:148
+                </p>
+
+                <div class="mx-auto my-7 h-px max-w-20 bg-[#d9b56d]"></div>
+
+                <p class="mx-auto max-w-2xl text-base leading-8 text-white/85 sm:text-lg">
+                    আজকের লক্ষ্য শুধু অন্যদের ছাড়িয়ে যাওয়া নয়;
+                    বরং গতকালের নিজের চেয়ে উত্তম হওয়া।
+                    স্কোর বাড়বে, র‍্যাঙ্কিং বদলাবে—কিন্তু তোমার
+                    আন্তরিক চেষ্টা ও উত্তম অভ্যাসই হোক সবচেয়ে বড় অর্জন।
+                </p>
+
+                <p class="gold-text mt-7 font-semibold">
+                    Keep growing. Keep doing good.
+                </p>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="border-t border-base-300 bg-white">
+        <div
+            class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-5 py-7 text-center sm:flex-row sm:px-8">
+
+            <a href="../index.html" class="text-lg font-bold text-[#123c32]">
+                Muhasaba
+            </a>
+
+            <p class="text-sm text-gray-500">
+                Build better habits. Compete in good deeds.
+            </p>
+
+            <a href="./ranking.html" class="text-sm font-semibold text-[#235b43] hover:underline">
+                View Ranking →
+            </a>
+
+        </div>
+    </footer>
+
+
+    <script>
+        const loginLink = document.getElementById("loginLink");
+        const logoutButton = document.getElementById("logout");
+
+        const loggedInUser = JSON.parse(
+            localStorage.getItem("loggedInUser")
+        );
+
+        if (loggedInUser) {
+            loginLink?.classList.add("hidden");
+            logoutButton?.classList.remove("hidden");
+        } else {
+            loginLink?.classList.remove("hidden");
+            logoutButton?.classList.add("hidden");
+        }
+
+        logoutButton?.addEventListener("click", () => {
+            localStorage.removeItem("loggedInUser");
+            window.location.href = "../pages/login.html";
+        });
+    </script>
+
+</body>
+
+</html>

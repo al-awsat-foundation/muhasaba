@@ -1,0 +1,121 @@
+<!-- STEP 1: put these two lines once inside your page's <head> (skip the Tailwind line if your project already has Tailwind) -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Galada&family=Hind+Siliguri:wght@500;600&display=swap"
+    rel="stylesheet">
+
+<!-- STEP 2: paste this div (and the script below it) wherever you want the card, for example inside a <section> -->
+<div id="score-card" class="w-[min(340px,88vw)] aspect-[4/5] font-['Hind_Siliguri'] [perspective:1100px]">
+    <div id="tilt"
+        class="relative h-full w-full transition-transform duration-200 ease-out motion-reduce:transition-none [transform-style:preserve-3d]">
+        <div id="flip"
+            class="relative h-full w-full transition-transform duration-700 ease-[cubic-bezier(.3,1.25,.4,1)] motion-reduce:transition-none [transform-style:preserve-3d]">
+
+            <!-- Front -->
+            <section id="front"
+                class="absolute inset-0 flex flex-col justify-center gap-10 overflow-hidden rounded-[28px] bg-gradient-to-b from-indigo-800 via-indigo-950 to-slate-950 p-7 text-white shadow-2xl ring-1 ring-white/10 [backface-visibility:hidden]">
+                <h1
+                    class="font-['Galada'] text-6xl leading-[1.25] text-center text-amber-100 drop-shadow-[0_0_20px_rgba(255,236,180,.4)]">
+                    স্কোর বোর্ড</h1>
+                <div class="flex flex-col gap-3">
+                    <button id="addBtn" type="button"
+                        class="w-full rounded-2xl bg-gradient-to-r from-violet-300 to-teal-200 py-4 font-extrabold text-slate-900 shadow-lg shadow-teal-200/30 transition hover:-translate-y-0.5 active:scale-95 focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-950">Add
+                        Score</button>
+                    <button id="rankBtn" type="button"
+                        class="w-full rounded-2xl border border-white/40 bg-white/5 py-4 font-extrabold transition hover:-translate-y-0.5 hover:bg-white/15 active:scale-95 focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-950">See
+                        Ranking</button>
+                </div>
+                <div class="glare pointer-events-none absolute inset-0 mix-blend-screen"></div>
+            </section>
+
+            <!-- Back: ranking -->
+            <section id="rank" inert
+                class="invisible absolute inset-0 flex flex-col gap-3 overflow-hidden rounded-[28px] bg-gradient-to-b from-indigo-800 via-indigo-950 to-slate-950 p-6 text-white shadow-2xl ring-1 ring-white/10 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                <h2 class="font-['Galada'] text-4xl leading-[1.25] text-center text-amber-100">র‍্যাংকিং</h2>
+                <ol id="list" class="flex flex-1 flex-col gap-1.5"></ol>
+                <button id="rankBack" type="button"
+                    class="w-full rounded-2xl border border-white/40 bg-white/5 py-3 font-extrabold transition hover:bg-white/15 active:scale-95 focus-visible:ring-2 focus-visible:ring-violet-300">Back</button>
+                <div class="glare pointer-events-none absolute inset-0 mix-blend-screen"></div>
+            </section>
+
+            <!-- Back: add score -->
+            <section id="add" inert
+                class="invisible absolute inset-0 flex flex-col gap-3 overflow-hidden rounded-[28px] bg-gradient-to-b from-indigo-800 via-indigo-950 to-slate-950 p-6 text-white shadow-2xl ring-1 ring-white/10 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                <h2 class="font-['Galada'] text-4xl leading-[1.25] text-center text-amber-100">স্কোর যোগ করুন</h2>
+                <div>
+                    <p class="mb-1.5 text-sm font-semibold text-violet-300">খেলোয়াড়</p>
+                    <div id="whoBox" class="flex flex-wrap gap-1.5"></div>
+                </div>
+                <div>
+                    <p class="mb-1.5 text-sm font-semibold text-violet-300">পয়েন্ট</p>
+                    <div id="ptsBox" class="flex flex-wrap gap-1.5"></div>
+                </div>
+                <div class="mt-auto grid grid-cols-2 gap-3">
+                    <button id="addBack" type="button"
+                        class="rounded-2xl border border-white/40 bg-white/5 py-3 font-extrabold transition hover:bg-white/15 active:scale-95 focus-visible:ring-2 focus-visible:ring-violet-300">Back</button>
+                    <button id="saveBtn" type="button"
+                        class="rounded-2xl bg-gradient-to-r from-violet-300 to-teal-200 py-3 font-extrabold text-slate-900 transition active:scale-95 focus-visible:ring-2 focus-visible:ring-violet-300">Save
+                        Score</button>
+                </div>
+                <div class="glare pointer-events-none absolute inset-0 mix-blend-screen"></div>
+            </section>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    const root = document.getElementById('score-card');
+    const $ = s => root.querySelector(s);
+    const tilt = $('#tilt'), flip = $('#flip'), list = $('#list'), whoBox = $('#whoBox'), ptsBox = $('#ptsBox');
+    const views = { front: $('#front'), rank: $('#rank'), add: $('#add') };
+    const bn = n => n.toLocaleString('bn-BD');           // Bangla digits
+    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Edit these: players, their scores, and the point choices
+    const roster = [{ n: 'রিয়া', s: 920 }, { n: 'তামিম', s: 870 }, { n: 'নুসরাত', s: 815 }, { n: 'ফাহিম', s: 760 }, { n: 'সাদিয়া', s: 702 }];
+    const options = [5, 10, 20, 50];
+    let who = roster[0], points = 10, opener = 'addBtn';
+
+    // Option chips (selected state comes from aria-pressed)
+    const chip = 'rounded-full border border-white/30 px-3 py-1 text-base transition active:scale-95 aria-pressed:border-transparent aria-pressed:bg-gradient-to-r aria-pressed:from-violet-300 aria-pressed:to-teal-200 aria-pressed:text-slate-900 focus-visible:ring-2 focus-visible:ring-violet-300';
+    whoBox.innerHTML = roster.map((p, i) => `<button type="button" class="${chip}" data-i="${i}" aria-pressed="${i === 0}">${p.n}</button>`).join('');
+    ptsBox.innerHTML = options.map(v => `<button type="button" class="${chip}" data-v="${v}" aria-pressed="${v === points}">+${bn(v)}</button>`).join('');
+    const pick = (box, btn) => box.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b === btn));
+    whoBox.onclick = e => { const b = e.target.closest('button'); if (b) { who = roster[b.dataset.i]; pick(whoBox, b); } };
+    ptsBox.onclick = e => { const b = e.target.closest('button'); if (b) { points = +b.dataset.v; pick(ptsBox, b); } };
+
+    // Ranking list, sorted high to low, rows slide in one by one
+    function renderRank() {
+        const badge = ['bg-amber-100', 'bg-violet-300', 'bg-teal-200'];
+        list.innerHTML = [...roster].sort((a, b) => b.s - a.s).map((p, i) =>
+            `<li class="flex max-h-10 flex-1 items-center gap-3 rounded-2xl bg-white/10 px-3 text-lg opacity-0 translate-y-2 transition duration-500" style="transition-delay:${i * 70 + 350}ms">
+        <span class="grid h-7 w-7 place-items-center rounded-full text-sm font-semibold ${badge[i] ? badge[i] + ' text-slate-900' : 'bg-white/15'}">${bn(i + 1)}</span>
+        <span class="flex-1">${p.n}</span><span class="font-semibold text-amber-100">${bn(p.s)}</span></li>`).join('');
+        requestAnimationFrame(() => requestAnimationFrame(() =>
+            list.querySelectorAll('li').forEach(li => li.classList.remove('opacity-0', 'translate-y-2'))));
+    }
+
+    // One card, three views: front, rank, add
+    function setView(v) {
+        if (v !== 'front') { views.rank.classList.toggle('invisible', v !== 'rank'); views.add.classList.toggle('invisible', v !== 'add'); }
+        flip.style.transform = v === 'front' ? '' : 'rotateY(180deg)';
+        for (const [k, el] of Object.entries(views)) { el.inert = k !== v; el.setAttribute('aria-hidden', k !== v); }
+        if (v === 'rank') renderRank();
+        setTimeout(() => (v === 'front' ? $('#' + opener) : v === 'rank' ? $('#rankBack') : whoBox.querySelector('[aria-pressed="true"]')).focus({ preventScroll: true }), 50);
+    }
+    $('#addBtn').onclick = () => { opener = 'addBtn'; setView('add'); };
+    $('#rankBtn').onclick = () => { opener = 'rankBtn'; setView('rank'); };
+    $('#rankBack').onclick = $('#addBack').onclick = () => setView('front');
+    $('#saveBtn').onclick = () => { who.s += points; opener = 'rankBtn'; setView('rank'); };
+    addEventListener('keydown', e => { if (e.key === 'Escape') setView('front'); });
+
+    // Tilt and glare follow the pointer
+    const glare = bg => root.querySelectorAll('.glare').forEach(g => g.style.background = bg);
+    root.onpointermove = e => {
+        if (calm) return;
+        const r = root.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        tilt.style.transform = `rotateX(${(.5 - y) * 18}deg) rotateY(${(x - .5) * 18}deg)`;
+        glare(`radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,.26), transparent 45%)`);
+    };
+    root.onpointerleave = () => { tilt.style.transform = ''; glare(''); };
+</script>

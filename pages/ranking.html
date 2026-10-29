@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Muhasaba | Ranking</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- DaisyUI -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5/daisyui.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        /* Hero */
+        .ranking-hero {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg,
+                    #122c36 0%,
+                    #1c484d 55%,
+                    #28685c 100%);
+        }
+
+        .ranking-hero::before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            top: -160px;
+            right: -60px;
+            border-radius: 50%;
+            background: #ffffff0c;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Top 3 cards */
+        .podium-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            background: white;
+            transition: transform .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .podium-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 35px #0f172a12;
+        }
+
+        .podium-first {
+            border-color: #e5c56b;
+            background: linear-gradient(145deg, #fffdf3, #fff7d9);
+        }
+
+        .podium-second {
+            background: linear-gradient(145deg, #ffffff, #f0f4f8);
+        }
+
+        .podium-third {
+            background: linear-gradient(145deg, #fffaf5, #f9e9dc);
+        }
+
+        .medal-circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            margin: 0 auto;
+            border-radius: 50%;
+            font-size: 30px;
+        }
+
+        /* Ranking rows */
+        .ranking-row {
+            transition: background .2s ease;
+        }
+
+        .ranking-row:hover {
+            background: #f8fafc;
+        }
+
+        .my-rank-row {
+            background: #eff6ff !important;
+            box-shadow: inset 3px 0 #3b82f6;
+        }
+
+        /* Penalty warning */
+        .penalty-row {
+            background: #fff8f6;
+        }
+
+        .penalty-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 9px;
+            border-radius: 999px;
+            background: #fee2e2;
+            color: #b91c1c;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .score-number {
+            font-variant-numeric: tabular-nums;
+        }
+
+        @media (max-width: 640px) {
+            .ranking-hero {
+                border-radius: 0 0 24px 24px;
+            }
+        }
+
+
+        /* =========================================
+   RESPONSIVE RANKING PAGE
+   Mobile + Tablet + Desktop
+========================================= */
+
+        html,
+        body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        /* Smooth transitions */
+        .podium-card,
+        .ranking-row {
+            transition: all 0.25s ease;
+        }
+
+        /* =========================================
+   MOBILE DESIGN
+========================================= */
+
+        @media (max-width: 640px) {
+
+            /* Navbar */
+            /* header {
+                width: 100%;
+                overflow: hidden;
+            } */
+
+            /* header>div {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
+                gap: 2px;
+                padding: 5px 8px;
+            } */
+
+            /* header>div>.navbar {
+                min-height: 0;
+                padding: 3px;
+            } */
+
+            /* Logo */
+            /* header>div>.navbar:first-child {
+                flex: 0 1 auto;
+                max-width: 36%;
+                margin: 0;
+            } */
+
+            /* header img {
+                width: 95px;
+                height: auto;
+                max-height: 34px;
+                object-fit: contain;
+            } */
+
+            /* Navigation links */
+            /* header>div>.navbar:nth-child(2) {
+                flex: 1 1 auto;
+                justify-content: center;
+                gap: 5px;
+                font-size: 12px;
+            } */
+
+            /* header>div>.navbar:nth-child(2) a {
+                padding: 6px 4px;
+                white-space: nowrap;
+            } */
+
+            /* Login / Logout */
+            /* header>div>.navbar:last-child {
+                flex: 0 0 auto;
+                padding: 2px;
+            } */
+
+            /* header .btn {
+                min-height: 28px;
+                height: 28px;
+                padding: 0 8px;
+                font-size: 11px;
+            } */
+
+            /* Hero section */
+            .ranking-hero {
+                border-radius: 0 0 18px 18px;
+            }
+
+            .hero-content {
+                padding: 24px 12px !important;
+            }
+
+            .hero-content>div:first-child {
+                font-size: 28px;
+                margin-bottom: 7px;
+            }
+
+            .hero-content h1 {
+                font-size: clamp(22px, 6vw, 29px);
+                line-height: 1.3;
+                margin-bottom: 10px;
+            }
+
+            .hero-content p {
+                line-height: 1.65;
+            }
+
+            .hero-content p:first-of-type {
+                font-size: 10px;
+                letter-spacing: 0.1em;
+            }
+
+            .hero-content>div:last-child {
+                margin-top: 13px;
+            }
+
+            .hero-content>div:last-child>div {
+                max-width: 100%;
+                padding: 7px 10px;
+                font-size: 11px;
+                overflow-wrap: anywhere;
+            }
+
+            /* Main content */
+            main {
+                padding: 22px 12px !important;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            /* Loading message */
+            #rankingMessage {
+                padding: 12px;
+                margin-bottom: 18px;
+                font-size: 13px;
+                border-radius: 12px;
+            }
+
+            /* Current user position */
+            #myPositionSection {
+                margin-bottom: 26px;
+            }
+
+            #myPositionSection>div {
+                padding: 14px;
+                border-radius: 15px;
+            }
+
+            #myPositionSection h2 {
+                font-size: 17px;
+                overflow-wrap: anywhere;
+            }
+
+            #myPositionSection #myScore {
+                font-size: 25px;
+            }
+
+            /* Section headings */
+            main section h2 {
+                line-height: 1.4;
+                overflow-wrap: anywhere;
+            }
+
+            /* Top three heading */
+            main section.mb-12>div.text-center {
+                margin-bottom: 18px;
+            }
+
+            main section.mb-12>div.text-center h2 {
+                font-size: 23px;
+            }
+
+            /* Top 3 cards: three compact columns */
+            #podiumSection {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 7px;
+                align-items: stretch;
+            }
+
+            .podium-card {
+                min-width: 0;
+                border-radius: 13px;
+                padding: 10px 5px !important;
+                overflow-wrap: anywhere;
+            }
+
+            .podium-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px #0f172a10;
+            }
+
+            .medal-circle {
+                width: 38px;
+                height: 38px;
+                font-size: 21px;
+                margin-bottom: 8px;
+            }
+
+            .podium-card h3 {
+                font-size: 12px;
+                line-height: 1.5;
+                overflow-wrap: anywhere;
+                word-break: normal;
+            }
+
+            .podium-card p {
+                font-size: 11px;
+                line-height: 1.5;
+                overflow-wrap: anywhere;
+            }
+
+            /* Ranking section spacing */
+            main section.mb-12 {
+                margin-bottom: 28px;
+            }
+
+            /* Ranking table */
+            main section .overflow-x-auto {
+                overflow-x: hidden;
+            }
+
+            #rankingTableBody {
+                font-size: 12px;
+            }
+
+            #rankingTableBody td,
+            table thead th {
+                padding: 10px 5px;
+                white-space: normal;
+                overflow-wrap: anywhere;
+            }
+
+            table {
+                width: 100%;
+                table-layout: fixed;
+                font-size: 12px;
+            }
+
+            table th:first-child,
+            table td:first-child {
+                width: 14%;
+                text-align: center;
+            }
+
+            table th:nth-child(2),
+            table td:nth-child(2) {
+                width: 34%;
+            }
+
+            table th:nth-child(3),
+            table td:nth-child(3) {
+                width: 25%;
+                text-align: right;
+            }
+
+            table th:nth-child(4),
+            table td:nth-child(4) {
+                width: 27%;
+                text-align: right;
+            }
+
+            /* Status badges inside the ranking table */
+            table .badge {
+                max-width: 100%;
+                padding: 3px 5px;
+                font-size: 10px;
+                white-space: normal;
+                line-height: 1.4;
+            }
+
+            /* Penalty section */
+            #penaltySection .rounded-2xl {
+                border-radius: 15px;
+            }
+
+            #penaltySection .bg-red-50 {
+                padding: 13px;
+            }
+
+            #penaltySection h2 {
+                font-size: 17px;
+            }
+
+            #penaltySection p {
+                font-size: 12px;
+                line-height: 1.7;
+            }
+
+            #penaltySection .w-11 {
+                width: 36px;
+                height: 36px;
+            }
+
+            #penaltyList>div {
+                padding: 12px !important;
+                gap: 8px;
+                overflow-wrap: anywhere;
+            }
+
+            .penalty-badge {
+                padding: 3px 6px;
+                font-size: 10px;
+                gap: 3px;
+            }
+
+            /* Empty state */
+            #emptyRanking {
+                padding: 40px 10px;
+            }
+
+            #emptyRanking h2 {
+                font-size: 18px;
+            }
+
+            /* Footer */
+            footer {
+                margin-top: 18px;
+            }
+
+            footer>div {
+                padding: 18px 10px;
+            }
+
+            footer p {
+                font-size: 12px;
+            }
+        }
+
+        /* =========================================
+   EXTRA SMALL PHONES
+========================================= */
+
+        @media (max-width: 380px) {
+
+            header img {
+                width: 78px;
+            }
+
+            header>div>.navbar:nth-child(2) {
+                gap: 2px;
+                font-size: 11px;
+            }
+
+            header>div>.navbar:nth-child(2) a {
+                padding: 6px 3px;
+            }
+
+            header .btn {
+                padding: 0 6px;
+                font-size: 10px;
+            }
+
+            main {
+                padding-left: 8px !important;
+                padding-right: 8px !important;
+            }
+
+            #podiumSection {
+                gap: 5px;
+            }
+
+            .podium-card {
+                padding: 8px 3px !important;
+                border-radius: 11px;
+            }
+
+            .medal-circle {
+                width: 32px;
+                height: 32px;
+                font-size: 18px;
+            }
+
+            .podium-card h3 {
+                font-size: 11px;
+            }
+
+            .podium-card p {
+                font-size: 10px;
+            }
+
+            table th,
+            table td {
+                padding: 8px 3px !important;
+                font-size: 10px;
+            }
+        }
+
+        /* =========================================
+   TABLET
+========================================= */
+
+        @media (min-width: 641px) and (max-width: 900px) {
+
+            main {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            #podiumSection {
+                gap: 14px;
+            }
+
+            .medal-circle {
+                width: 52px;
+                height: 52px;
+                font-size: 26px;
+            }
+        }
+
+        /* Accessibility: reduce motion when requested */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+            }
+        }
+
+        /* Mobile: move update information below the hero */
+        @media (max-width: 640px) {
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 24px 12px !important;
+            }
+
+            .hero-content>div:last-child {
+                margin-top: 14px;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+
+            #lastUpdated {
+                font-size: 11px;
+            }
+
+            .hero-content>div:last-child>div {
+                max-width: 100%;
+                white-space: normal;
+                text-align: center;
+                overflow-wrap: anywhere;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+    <!-- ================================================
+                         NAVBAR
+    ================================================= -->
+
+    <header class="sticky top-0 z-50 border-b border-base-300 bg-base-100">
+
+        <div class="flex justify-between items-center">
+
+            <!-- LEFT: LOGO -->
+            <div class="navbar relative mx-auto max-w-7xl px-4">
+
+                <div class="navbar justify-start">
+                    <a href="../index.html" class="flex items-center">
+                        <img src="../images/muhasaba.png" alt="Website Logo" class="w-full md:h-12">
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- CENTER: LINKS -->
+            <div class="navbar justify-center gap-4">
+
+                <a href="./rules.html" class="flex items-center p-3 rounded-sm border-r border-r-red-100">
+                    Rules
+                </a>
+
+                <a href="./ranking.html" aria-current="page" class="flex items-center font-semibold text-primary">
+                    Ranking
+                </a>
+
+            </div>
+
+            <!-- RIGHT: LOGIN / LOGOUT -->
+            <div class="navbar justify-end">
+                <div class="flex gap-2">
+
+                    <a href="../pages/login.html" id="loginLink">
+                        <button id="login" class="btn btn-primary btn-sm md:btn-md">
+                            Login
+                        </button>
+                    </a>
+
+                    <button id="logout" class="btn btn-primary btn-sm md:btn-md hidden">
+                        Logout
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================================
+                       HERO SECTION
+    ================================================= -->
+
+    <section class="ranking-hero text-white">
+
+        <div class="hero-content max-w-7xl mx-auto px-4 py-12 md:py-16 text-center">
+
+            <div class="text-4xl mb-4" aria-hidden="true">🏆</div>
+
+            <p class="text-xs md:text-sm uppercase tracking-[0.25em] text-emerald-100 mb-3">
+                Consistency · Discipline · Growth
+            </p>
+
+            <h1 class="text-3xl md:text-5xl font-bold mb-4">
+                সম্মিলিত র‍্যাংকিং
+            </h1>
+
+            <p class="max-w-xl mx-auto text-sm md:text-base text-white/75 leading-7">
+                প্রতিদিন নিজের উন্নতি করো। গতকালের চেয়ে আজ আরও এক ধাপ এগিয়ে যাও।
+            </p>
+
+            <div class="mt-6 flex justify-center">
+                <div class="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm">
+                    <span aria-hidden="true">📊</span>
+                    <span id="lastUpdated">সর্বশেষ তথ্য লোড হচ্ছে...</span>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================
+                       MAIN CONTENT
+    ================================================= -->
+
+    <main class="max-w-7xl mx-auto px-4 py-8 md:py-12">
+
+        <!-- Loading / Error message -->
+        <div id="rankingMessage" role="status" aria-live="polite"
+            class="mb-6 rounded-xl border border-slate-200 bg-white p-5 text-center text-slate-500">
+            র‍্যাংকিং লোড হওয়ার অপেক্ষায়...
+        </div>
+
+
+        <!-- CURRENT USER POSITION -->
+        <section id="myPositionSection" class="hidden mb-10">
+
+            <div class="rounded-2xl border border-blue-200 bg-blue-50 p-5 md:p-6">
+
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+
+                    <div class="flex items-center gap-4">
+
+                        <div
+                            class="w-12 h-12 shrink-0 rounded-full bg-blue-100 flex items-center justify-center text-2xl">
+                            👤
+                        </div>
+
+                        <div>
+                            <p class="text-xs font-semibold text-blue-700 mb-1">
+                                আপনার বর্তমান অবস্থান
+                            </p>
+
+                            <h2 id="myName" class="text-xl font-bold text-slate-800">
+                                ইউজার
+                            </h2>
+
+                            <p id="myPositionText" class="text-sm text-slate-500 mt-1">
+                                র‍্যাংক হিসাব করা হচ্ছে...
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="md:text-right">
+                        <p class="text-sm text-slate-500">আপনার মোট স্কোর</p>
+
+                        <p id="myScore" class="score-number text-3xl font-bold text-blue-700">
+                            0
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TOP THREE -->
+        <section class="mb-12">
+
+            <div class="text-center mb-8">
+                <p class="text-xs font-semibold uppercase tracking-widest text-amber-600 mb-2">
+                    The Leaders
+                </p>
+
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800">
+                    সেরা তিনজন
+                </h2>
+
+                <p class="text-sm text-slate-500 mt-2">
+                    ধারাবাহিকতার পথে যারা এগিয়ে আছে
+                </p>
+            </div>
+
+            <div id="podiumSection" class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 items-end">
+
+                <!-- Top 3 will be rendered by ranking.js -->
+
+            </div>
+
+        </section>
+
+
+        <!-- FULL RANKING TABLE -->
+        <section class="mb-12">
+
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-5">
+
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-widest text-emerald-700 mb-2">
+                        Leaderboard
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-slate-800">
+                        সম্পূর্ণ র‍্যাংকিং
+                    </h2>
+
+                    <p class="text-sm text-slate-500 mt-1">
+                        স্কোর ও নামের ক্রমানুসারে বর্তমান অবস্থান
+                    </p>
+                </div>
+
+                <div class="text-sm text-slate-500">
+                    মোট ইউজার:
+                    <span id="userCount" class="font-bold text-slate-800">0</span>
+                </div>
+
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+
+                <div class="overflow-x-auto">
+
+                    <table class="table w-full">
+
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 text-xs uppercase">
+                                <th class="py-4">Rank</th>
+                                <th>ইউজার</th>
+                                <th class="text-right">মোট স্কোর</th>
+                                <th class="text-right">অবস্থা</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="rankingTableBody">
+
+                            <!-- All users will be rendered by ranking.js -->
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LAST THREE / PENALTY ZONE -->
+        <!-- <section id="penaltySection" class="hidden mb-8">
+
+            <div class="rounded-2xl border border-red-200 bg-white overflow-hidden shadow-sm">
+
+                <div class="bg-red-50 border-b border-red-100 p-5 md:p-6">
+
+                    <div class="flex items-start gap-3">
+
+                        <div class="w-11 h-11 shrink-0 rounded-xl bg-red-100 flex items-center justify-center text-xl">
+                            ⚠️
+                        </div>
+
+                        <div>
+                            <h2 class="text-xl font-bold text-red-800">
+                                জরিমানার পর্যায়
+                            </h2>
+
+                            <p class="text-sm text-red-700/80 mt-1 leading-6">
+                                বর্তমানে সর্বশেষ তিনটি অবস্থানে থাকা সদস্যরা এই পর্যায়ে আছেন।
+                                স্কোর বাড়িয়ে উপরে উঠলে এই চিহ্ন আর থাকবে না।
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div id="penaltyList" class="divide-y divide-red-100">
+
+                     Last three users will be rendered by ranking.js -->
+
+        <!-- </div>
+
+                <div class="border-t border-red-100 bg-red-50/50 p-4 text-center">
+                    <p class="text-xs text-slate-500">
+                        এটি বর্তমান র‍্যাংক অনুযায়ী সতর্কবার্তা; এখানে স্বয়ংক্রিয়ভাবে স্কোর কাটা হয় না।
+                    </p>
+                </div>
+
+            </div>
+
+        </section> -->
+
+
+        <!-- EMPTY STATE -->
+        <section id="emptyRanking" class="hidden py-16 text-center">
+
+            <div class="text-5xl mb-4">📊</div>
+
+            <h2 class="text-xl font-bold text-slate-800">
+                এখনো কোনো Ranking নেই
+            </h2>
+
+            <p class="text-sm text-slate-500 mt-2">
+                ইউজারের তথ্য পাওয়া গেলে এখানে র‍্যাংকিং দেখা যাবে।
+            </p>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- Admin Panel Button -->
+    <div id="adminPanelSection" class="hidden mx-auto my-10 max-w-5xl px-4 text-center">
+        <a href="./admin.html"
+            class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3 font-semibold text-white shadow-lg transition hover:bg-indigo-700">
+            <span>⚙️</span>
+            <span>Admin Panel</span>
+        </a>
+    </div>
+
+    <script>
+        (() => {
+            const ADMIN_EMAIL = "computerbd78@gmail.com";
+
+            try {
+                const user = JSON.parse(
+                    localStorage.getItem("loggedInUser") || "null"
+                );
+
+                const loginTime = Number(
+                    localStorage.getItem("loginTime")
+                );
+
+                const sessionValid =
+                    user &&
+                    Number.isFinite(loginTime) &&
+                    Date.now() - loginTime < 60 * 60 * 1000;
+
+                const isAdmin =
+                    sessionValid &&
+                    String(user.email || "").toLowerCase() ===
+                    ADMIN_EMAIL.toLowerCase();
+
+                document
+                    .getElementById("adminPanelSection")
+                    ?.classList.toggle("hidden", !isAdmin);
+
+            } catch (error) {
+                console.error("Admin access check failed:", error);
+            }
+        })();
+    </script>
+</body>
+
+
+
+<!-- ================================================
+                         FOOTER
+    ================================================= -->
+
+<footer class="border-t border-slate-200 bg-white mt-8">
+
+    <div class="max-w-7xl mx-auto px-4 py-6 text-center">
+
+        <p class="text-sm text-slate-500">
+            Muhasaba · নিজের উন্নতির প্রতিদিনের যাত্রা
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- Ranking logic will be added in the next step -->
+<script src="../js/config.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/ranking.js"></script>
+
+</body>
+
+</html>
